@@ -1,4 +1,6 @@
 bootstrap:
+	pyenv virtualenv 3.11 midi-lm
+	pyenv local midi-lm
 	python -m pip install pip-tools
 
 requirements:

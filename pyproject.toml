@@ -51,6 +51,8 @@ train = "midi_lm.train:train"
 
 [tool.ruff]
 line-length = 108
+
+[tool.ruff.lint]
 select = [
     "B",   # https://pypi.org/project/flake8-bugbear/
     "E",   # https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes
