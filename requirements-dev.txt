@@ -146,7 +146,7 @@ h2==4.1.0
 hpack==4.0.0
     # via h2
 hydra-core==1.3.2
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 hyperframe==6.0.1
     # via h2
 idna==3.6
@@ -223,7 +223,7 @@ jupyter-server==2.11.1
 jupyter-server-terminals==0.4.4
     # via jupyter-server
 jupyterlab==4.0.9
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 jupyterlab-pygments==0.3.0
     # via nbconvert
 jupyterlab-server==2.25.2
@@ -231,7 +231,7 @@ jupyterlab-server==2.25.2
 kiwisolver==1.4.5
     # via matplotlib
 lightning==2.1.2
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 lightning-utilities==0.10.0
     # via
     #   lightning
@@ -259,7 +259,7 @@ matplotlib-inline==0.1.6
 mdurl==0.1.2
     # via markdown-it-py
 midi-player==0.4
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 miditoolkit==1.0.1
     # via muspy
 mido==1.3.0
@@ -270,7 +270,7 @@ mido==1.3.0
 mistune==3.0.2
     # via nbconvert
 modal==0.56.4287
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 more-itertools==10.1.0
     # via music21
 mpmath==1.3.0
@@ -283,7 +283,7 @@ multidict==6.0.4
 music21==9.1.0
     # via muspy
 muspy==0.5.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 nbclient==0.9.0
     # via nbconvert
 nbconvert==7.11.0
@@ -305,7 +305,7 @@ numpy==1.26.2
     #   contourpy
     #   lightning
     #   matplotlib
-    #   midi-lm (pyproject.toml)
+    #   midi_lm (pyproject.toml)
     #   miditoolkit
     #   music21
     #   pandas
@@ -358,11 +358,11 @@ pillow==10.1.0
     #   matplotlib
     #   streamlit
 pip-tools==7.3.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 platformdirs==4.0.0
     # via jupyter-core
 plotly==5.18.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 pluggy==1.3.0
     # via pytest
 pretty-midi==0.2.10
@@ -418,13 +418,13 @@ pyproject-hooks==1.0.0
     # via build
 pytest==7.4.3
     # via
-    #   midi-lm (pyproject.toml)
+    #   midi_lm (pyproject.toml)
     #   pytest-cov
     #   pytest-repeat
 pytest-cov==4.1.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 pytest-repeat==0.9.3
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 python-dateutil==2.8.2
     # via
     #   arrow
@@ -460,7 +460,7 @@ requests==2.31.0
     # via
     #   fsspec
     #   jupyterlab-server
-    #   midi-lm (pyproject.toml)
+    #   midi_lm (pyproject.toml)
     #   music21
     #   muspy
     #   requests-oauthlib
@@ -488,7 +488,7 @@ rpds-py==0.13.1
 rsa==4.9
     # via google-auth
 ruff==0.1.6
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 scipy==1.11.4
     # via pypianoroll
 send2trash==1.8.2
@@ -519,7 +519,7 @@ stack-data==0.6.3
 starlette==0.27.0
     # via fastapi
 streamlit==1.29.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 sympy==1.12
     # via torch
 synchronicity==0.5.3
@@ -532,7 +532,7 @@ tenacity==8.2.3
     #   streamlit
 tensorboard==2.15.1
     # via
-    #   midi-lm (pyproject.toml)
+    #   midi_lm (pyproject.toml)
     #   torch-tb-profiler
 tensorboard-data-server==0.7.2
     # via tensorboard
@@ -551,12 +551,12 @@ toolz==0.12.0
 torch==2.1.1
     # via
     #   lightning
-    #   midi-lm (pyproject.toml)
+    #   midi_lm (pyproject.toml)
     #   pytorch-lightning
     #   torchmetrics
     #   x-transformers
 torch-tb-profiler==0.4.3
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 torchmetrics==1.2.0
     # via
     #   lightning
@@ -572,7 +572,7 @@ tornado==6.3.3
 tqdm==4.66.1
     # via
     #   lightning
-    #   midi-lm (pyproject.toml)
+    #   midi_lm (pyproject.toml)
     #   muspy
     #   pytorch-lightning
 traitlets==5.14.0
@@ -591,7 +591,7 @@ traitlets==5.14.0
     #   nbformat
 typer==0.9.0
     # via
-    #   midi-lm (pyproject.toml)
+    #   midi_lm (pyproject.toml)
     #   modal
 types-certifi==2021.10.8.3
     # via modal
@@ -625,9 +625,9 @@ urllib3==2.0.7
 validators==0.22.0
     # via streamlit
 wandb==0.16.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 watchdog==3.0.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 watchfiles==0.21.0
     # via modal
 wcwidth==0.2.12
@@ -647,7 +647,7 @@ werkzeug==3.0.1
 wheel==0.42.0
     # via pip-tools
 x-transformers==1.26.0
-    # via midi-lm (pyproject.toml)
+    # via midi_lm (pyproject.toml)
 yarl==1.9.3
     # via aiohttp
 zipp==3.17.0
