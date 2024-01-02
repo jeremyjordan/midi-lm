@@ -69,6 +69,7 @@ frozenlist==1.4.0
     #   aiosignal
 fsspec[http]==2023.10.0
     # via
+    #   fsspec
     #   lightning
     #   pytorch-lightning
     #   torch

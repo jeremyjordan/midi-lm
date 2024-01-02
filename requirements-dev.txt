@@ -91,7 +91,9 @@ comm==0.2.0
 contourpy==1.2.0
     # via matplotlib
 coverage[toml]==7.3.2
-    # via pytest-cov
+    # via
+    #   coverage
+    #   pytest-cov
 cycler==0.12.1
     # via matplotlib
 debugpy==1.8.0
@@ -122,6 +124,7 @@ frozenlist==1.4.0
     #   aiosignal
 fsspec[http]==2023.10.0
     # via
+    #   fsspec
     #   lightning
     #   pytorch-lightning
     #   torch
