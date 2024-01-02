@@ -1,0 +1,27 @@
+# Python specific ignores
+*.pyc
+*.pyo
+**/__pycache__/
+
+*.egg-info/
+dist/
+build/
+
+# Pytest specific ignores
+.coverage*
+
+# IDE specific ignores
+.vscode/
+.idea/
+
+# OS specific ignores
+.DS_Store
+
+# Project specific ignores
+data/
+outputs/
+notes/
+.scratch/
+.pytest_cache/
+.ipynb_checkpoints/
+.ruff_cache/

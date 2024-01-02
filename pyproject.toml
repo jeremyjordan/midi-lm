@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "midi_lm"
+dynamic = ["version"]
+description = "Generate music with language models trained on MIDI data"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "hydra-core",
+    "lightning==2.1.2",
+    "modal",
+    "muspy",
+    "numpy",
+    "plotly",
+    "requests",
+    "torch>=2.0.1",
+    "tqdm",
+    "typer",
+    "wandb>=0.13.9",
+    "x-transformers",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "midi_lm.__version__" }
+
+[project.optional-dependencies]
+app = ["streamlit", "midi-player"]
+datasets = ["gdown"]
+dev = [
+    "jupyterlab",
+    "pip-tools",
+    "plotly",
+    "pytest-cov",
+    "pytest-repeat",
+    "pytest",
+    "ruff",
+    "setuptools",
+    "tensorboard>=2.13.0",
+    "torch-tb-profiler>=0.4.1",
+    "watchdog",
+]
+
+[tool.setuptools]
+packages = ["midi_lm"]
+
+[project.scripts]
+train = "midi_lm.train:train"
+
+[tool.ruff]
+line-length = 108
+select = [
+    "B",   # https://pypi.org/project/flake8-bugbear/
+    "E",   # https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes
+    "PLC", # https://beta.ruff.rs/docs/rules/#convention-plc
+    "RUF", # https://beta.ruff.rs/docs/rules/#ruff-specific-rules-ruf
+    "PT",  # https://github.com/m-burst/flake8-pytest-style
+    "RET", # https://pypi.org/project/flake8-return/
+]
+ignore = [
+    "RET504", # Unnecessary assignment before return statement 
+    "PT018",  # Assertion should be broken down into multiple parts
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.pytest.ini_options]
+addopts = ["--cov=midi_lm", "--cov-report=term-missing", "--doctest-modules"]
+markers = ["slow: marks tests as slow (deselect with '-m \"not slow\"')"]
+filterwarnings = [
+    'ignore:.*Call to deprecated create function.*:DeprecationWarning',
+    "ignore::UserWarning",
+    "ignore:.*distutils Version classes are deprecated.",
+]
