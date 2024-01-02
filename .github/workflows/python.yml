@@ -25,7 +25,7 @@ jobs:
         pip install -e .
     - name: Lint with ruff
       run: |
-        ruff . --check
+        ruff .
     - name: Download eighth notes dataset
       run: |
         python midi_lm/datasets/eighth_notes.py download
