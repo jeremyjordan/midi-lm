@@ -113,14 +113,14 @@ train compute=local logger=wandb-test trainer=mps \
 ```
 train compute=local logger=wandb-test trainer=mps \
     tokenizer=mmt model=mmt network=mmt-small \
-    dataset=nes transforms=crop_transpose
+    dataset=nes transforms=crop-transpose
 ```
 
 Example remote run:
 ```
 train compute=a10g compute.timeout=14400 logger=wandb-test trainer=gpu \
     tokenizer=mmt model=mmt network=mmt \
-    dataset=maestro transforms=crop_transpose
+    dataset=maestro transforms=crop-transpose
 ```
 
 Hydra override syntax examples:
@@ -139,7 +139,7 @@ below for convenience.
 == Configuration groups ==
 Compose your configuration from those groups (group=option)
 
-collator: multi_seq_dict
+collator: multi-seq-dict
 compute: a100, a10g, cpu, local
 dataset: bach, maestro, nes, scales, symphony-net
 logger: tensorboard, wandb, wandb-test
@@ -149,5 +149,5 @@ network: mmt, mmt-medium, mmt-small, structured, structured-medium, structured-s
 optimizer: adam, adamw, sgd
 tokenizer: mmt, structured, tpd
 trainer: cpu, gpu, mps, smoke-test
-transforms: crop, crop_transpose
+transforms: crop, crop-transpose
 ```

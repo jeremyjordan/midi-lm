@@ -25,7 +25,7 @@ class TrainingConfig:
     defaults: List[Any] = field(
         default_factory=lambda: [
             "_self_",
-            {"collator": "multi_seq_dict"},
+            {"collator": "multi-seq-dict"},
             {"compute": "local"},
             {"dataset": "scales"},
             {"logger": "tensorboard"},
@@ -55,7 +55,7 @@ config = ConfigStore.instance()
 config.store(name="config", node=TrainingConfig)
 config.store(group="hydra", name="config", node=_internal.hydra_conf, provider="hydra")
 
-config.store(group="collator", name="multi_seq_dict", node=collator.MultipleSequenceDictCollator)
+config.store(group="collator", name="multi-seq-dict", node=collator.MultipleSequenceDictCollator)
 
 config.store(group="compute", name="local", node=compute.LocalConfig)
 config.store(group="compute", name="cpu", node=compute.ModalCpuConfig)
@@ -104,4 +104,4 @@ config.store(group="trainer", name="mps", node=trainer.MpsTrainerConfig)
 config.store(group="trainer", name="smoke-test", node=trainer.CpuDebugTrainerConfig)
 
 config.store(group="transforms", name="crop", node=transforms.CropConfig)
-config.store(group="transforms", name="crop_transpose", node=transforms.CropTransposeConfig)
+config.store(group="transforms", name="crop-transpose", node=transforms.CropTransposeConfig)
