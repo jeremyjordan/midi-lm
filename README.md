@@ -93,7 +93,7 @@ make install
 ## Training a model
 
 Model training can be kicked off from the command line using [Hydra](https://hydra.cc/). Hydra provides a lot of control
-over how you compose configurations from the command line. These configurations are defined in `midi_lm.config` as
+over how you compose configurations from the command line. These configurations are defined in `midi_lm/config/` as
 dataclass objects. These dataclass objects are given short-names in the "config store" defined in
 `midi_lm/config/__init__.py`.
 
