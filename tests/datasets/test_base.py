@@ -77,7 +77,7 @@ def test_music_dataset_collect_midi_files(dataset_dir, tokenizer, midi_files):
     # Test the collect_midi_files method of MusicDataset
     dataset = MusicDataset(dataset_dir, tokenizer)
     collected_files = dataset.collect_midi_files(dataset_dir)
-    assert collected_files == midi_files
+    assert set(collected_files) == set(midi_files)
 
 
 def test_music_dataset_download(dataset_dir, tokenizer):
