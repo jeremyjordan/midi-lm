@@ -1,15 +1,15 @@
 bootstrap:
 	pyenv virtualenv 3.11 midi-lm
 	pyenv local midi-lm
-	python -m pip install pip-tools
+	curl -LsSf https://astral.sh/uv/install.sh | sh
 
 requirements:
-	pip-compile -o requirements.txt --resolver=backtracking pyproject.toml -v
-	pip-compile --extra dev --extra app -o requirements-dev.txt --resolver=backtracking pyproject.toml -v
+	uv pip compile pyproject.toml -o requirements.txt
+	uv pip compile --extra dev --extra app pyproject.toml -o requirements-dev.txt
 
 install:
-	pip install -r requirements-dev.txt
-	pip install -e .
+	uv pip install -r requirements-dev.txt
+	uv pip install -e .
 
 test:
 	pytest .
