@@ -22,20 +22,20 @@ class NESDatasetConfig:
     _target_: str = "midi_lm.datasets.nes.NESDataModule"
     dataset_dir: str = "data/nes/"
     batch_size: int = 16
-    num_workers: int = 0
+    num_workers: int = 8
 
 
 @dataclass
 class MaestroDatasetConfig:
     _target_: str = "midi_lm.datasets.maestro.MaestroDataModule"
     dataset_dir: str = "data/maestro/"
-    batch_size: int = 16
-    num_workers: int = 4
+    batch_size: int = 64
+    num_workers: int = 16
 
 
 @dataclass
 class SymphonyNetConfig:
     _target_: str = "midi_lm.datasets.symphony_net.SymphonyNetDataModule"
     dataset_dir: str = "data/symphony_net/"
-    batch_size: int = 16
-    num_workers: int = 4
+    batch_size: int = 64
+    num_workers: int = 16

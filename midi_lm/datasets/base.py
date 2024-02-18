@@ -165,6 +165,7 @@ class MusicDataModule(LightningDataModule):
         batch_size=32,
         num_workers=8,
         collate_fn=None,
+        pin_memory=True,
     ):
         super().__init__()
         self.dataset_dir = dataset_dir
@@ -173,6 +174,7 @@ class MusicDataModule(LightningDataModule):
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.collate_fn = collate_fn
+        self.pin_memory = pin_memory
 
     def setup(self, stage=None):
         self.train_dataset = self.dataset_class(
@@ -199,6 +201,7 @@ class MusicDataModule(LightningDataModule):
             drop_last=True,
             shuffle=True,
             collate_fn=self.collate_fn,
+            pin_memory=self.pin_memory,
         )
 
     def val_dataloader(self):
@@ -210,4 +213,5 @@ class MusicDataModule(LightningDataModule):
             drop_last=False,
             shuffle=False,
             collate_fn=self.collate_fn,
+            pin_memory=self.pin_memory,
         )

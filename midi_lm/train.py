@@ -5,18 +5,15 @@ import hydra
 import lightning.pytorch as pl
 from hydra.core.hydra_config import HydraConfig
 from hydra.core.singleton import Singleton
-from lightning.pytorch.callbacks import (
-    LearningRateMonitor,
-    ModelCheckpoint,
-    RichProgressBar,
-)
+from lightning.pytorch.callbacks import LearningRateMonitor, ModelCheckpoint, RichProgressBar
 from lightning.pytorch.loggers.wandb import WandbLogger
 from omegaconf import OmegaConf
 
+from midi_lm import logger
 from midi_lm.callbacks import GenerateSequenceCallback
 from midi_lm.config import TrainingConfig
 from midi_lm.config.transforms import create_transforms
-from midi_lm.modal import remote_image, stub, volume
+from midi_lm.modal_config import remote_image, stub, volume
 from midi_lm.tokenizers import BaseTokenizer
 
 
@@ -70,6 +67,7 @@ def run_training(config: TrainingConfig):
 def train_remote(config: TrainingConfig, singleton_state: dict, args: list[str]):
     import os
 
+    import torch
     from hydra.core.utils import setup_globals
 
     # perform some initial hydra setup
@@ -82,6 +80,8 @@ def train_remote(config: TrainingConfig, singleton_state: dict, args: list[str])
     # os.environ["WANDB_PROGRAM"] = args[0]
     # os.environ["WANDB_ARGS"] = json.dumps(args[1:])
 
+    torch.set_float32_matmul_precision("medium")
+
     # execute the model training
     run_training(config)
 
@@ -90,10 +90,10 @@ def train_remote(config: TrainingConfig, singleton_state: dict, args: list[str])
 @hydra.main(version_base=None, config_name="config")
 def train(config: TrainingConfig) -> None:
     if config.compute.local:
-        print("Running training locally")
+        logger.info("Running training locally")
         run_training(config)
     else:
-        print("Running remote training")
+        logger.info("Running remote training")
         fn = stub.function(
             image=remote_image,
             volumes={"/root/data": volume},

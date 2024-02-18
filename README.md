@@ -118,7 +118,7 @@ train compute=local logger=wandb-test trainer=mps \
 
 Example remote run:
 ```
-train compute=a10g compute.timeout=14400 logger=wandb-test trainer=gpu \
+train compute=a10g compute.timeout=21600 logger=wandb trainer=gpu \
     tokenizer=mmt model=mmt network=mmt \
     dataset=maestro transforms=crop-transpose
 ```
