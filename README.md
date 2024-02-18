@@ -121,6 +121,11 @@ Example remote run:
 train compute=a10g compute.timeout=21600 logger=wandb trainer=gpu \
     tokenizer=mmt model=mmt network=mmt \
     dataset=maestro transforms=crop-transpose
+
+train compute=a10g compute.timeout=3600 logger=wandb-test trainer=gpu \
+    tokenizer=mmt model=mmt network=mmt \
+    dataset=nes transforms=crop-transpose \
+    +trainer.profiler="simple" +trainer.max_steps=10
 ```
 
 Hydra override syntax examples:
