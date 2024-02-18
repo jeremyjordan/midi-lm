@@ -19,6 +19,63 @@ MAGENTA_JS_REQUIREMENTS = [
 ]
 MAGENTA_JS = f"https://cdn.jsdelivr.net/combine/{','.join(MAGENTA_JS_REQUIREMENTS)}"
 VISUALIZATION_OPTIONS = Literal["piano-roll", "waterfall", "staff"]
+CUSTOM_STYLE = """
+midi-player {
+  display: block;
+  width: inherit;
+  margin: 4px;
+  margin-bottom: 0;
+}
+midi-player::part(control-panel) {
+  background: #f2f5f6;
+  border: 2px solid #000;
+  border-radius: 10px 10px 0 0;
+}
+midi-player::part(play-button) {
+  color: #333333;
+  border: 2px solid currentColor;
+  background-color: #D8D8D8;
+  border-radius: 20px;
+  transition: all 0.2s;
+  content: 'hello';
+}
+midi-player::part(play-button):hover {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+}
+midi-player::part(time) {
+  font-family: monospace;
+}
+
+/* Custom visualizer style */
+midi-visualizer .piano-roll-visualizer {
+  background: #FFFFFF;
+  border: 2px solid black;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  margin: 4px;
+  margin-top: 0;
+  overflow: auto;
+}
+midi-visualizer svg rect.note {
+  opacity: 0.6;
+  stroke-width: 2;
+}
+midi-visualizer svg rect.note[data-instrument="0"]{
+  fill: #A5A5A5;
+  stroke: #333333;
+}
+midi-visualizer svg rect.note[data-instrument="2"]{
+  fill: #A5A5A5;
+  stroke: #333333;
+}
+midi-visualizer svg rect.note.active {
+  opacity: 0.9;
+  stroke: #000;
+  fill: #99C3FF;
+}
+"""
 
 
 def midi_player_iframe(
@@ -44,10 +101,13 @@ def midi_player_iframe(
 
     # Create the HTML snippet
     rendered_html = f"""
+    <style>
+    {CUSTOM_STYLE}
+    </style>
     <script src="{MAGENTA_JS}"></script>
     <p>{title}</p>
-    <midi-player src="{data_url}" sound-font visualizer="#myVisualizer"></midi-player>
-    <midi-visualizer type="{vis_type}" id="myVisualizer" style="background: #fff;"></midi-visualizer>
+    <midi-player src="{data_url}" sound-font visualizer="#midi-visualizer"></midi-player>
+    <midi-visualizer type="{vis_type}" id="midi-visualizer" style="background: #fff;"></midi-visualizer>
     """
 
     output = f"""
