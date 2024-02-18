@@ -1,7 +1,6 @@
 bootstrap:
-	pyenv virtualenv 3.11 midi-lm
-	pyenv local midi-lm
 	curl -LsSf https://astral.sh/uv/install.sh | sh
+	uv venv
 
 requirements:
 	uv pip compile pyproject.toml -o requirements.txt
