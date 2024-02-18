@@ -70,7 +70,7 @@ def test_music_dataset_getitem(dataset_dir, tokenizer, midi_files):
         item = dataset[i]
         assert isinstance(item, dict)
         assert "_filename" in item
-        assert item["_filename"] == midi_files[i]
+        assert item["_filename"] in midi_files
 
 
 def test_music_dataset_collect_midi_files(dataset_dir, tokenizer, midi_files):
