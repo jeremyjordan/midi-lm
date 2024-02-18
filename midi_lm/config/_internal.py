@@ -22,7 +22,7 @@ hydra_conf = HydraConf(
                 "level": "INFO",
             },
         },
-        "root": {"handlers": ["file"]},
+        "root": {"handlers": ["file", "console"]},
         "loggers": {
             "torch.distributed.nn.jit.instantiator": {"level": "ERROR"},
         },

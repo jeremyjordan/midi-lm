@@ -78,7 +78,7 @@ class MultitrackMusicTransformerTokenizer(BaseTokenizer):
 
     def encode(self, music: muspy.Music):
         if music.resolution != DEFAULT_RESOLUTION:
-            print(f"Warning: resolution is {music.resolution}. Adjusting to 12...")
+            logger.warning(f"Warning: resolution is {music.resolution}. Adjusting to 12...")
             music = music.adjust_resolution(DEFAULT_RESOLUTION)
 
         resolution = music.resolution
@@ -128,9 +128,9 @@ class MultitrackMusicTransformerTokenizer(BaseTokenizer):
 
         # notes
         for track in music.tracks:
-            instrument_idx = self.encode_instrument(track.program)
             if track.program not in instruments:
                 continue
+            instrument_idx = self.encode_instrument(track.program)
             for note in track.notes:
                 beat, position = divmod(note.time, resolution)
                 if beat >= self.max_beats:
