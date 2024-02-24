@@ -261,7 +261,7 @@ mido==1.3.0
     #   pretty-midi
 mistune==3.0.2
     # via nbconvert
-modal==0.57.55
+modal==0.58.81
 more-itertools==10.1.0
     # via music21
 mpmath==1.3.0
