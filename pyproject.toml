@@ -11,7 +11,7 @@ requires-python = ">=3.11"
 dependencies = [
     "hydra-core",
     "lightning==2.1.2",
-    "modal",
+    "modal>=0.58.81",
     "muspy",
     "numpy",
     "plotly",
@@ -33,6 +33,7 @@ dev = [
     "jupyterlab",
     "pip-tools",
     "plotly",
+    "py-spy",
     "pytest-cov",
     "pytest-repeat",
     "pytest",
@@ -56,11 +57,13 @@ line-length = 108
 select = [
     "B",   # https://pypi.org/project/flake8-bugbear/
     "E",   # https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes
+    "F",   # https://flake8.pycqa.org/en/latest/user/error-codes.html
     "PLC", # https://beta.ruff.rs/docs/rules/#convention-plc
     "RUF", # https://beta.ruff.rs/docs/rules/#ruff-specific-rules-ruf
     "PT",  # https://github.com/m-burst/flake8-pytest-style
     "RET", # https://pypi.org/project/flake8-return/
 ]
+
 ignore = [
     "RET504", # Unnecessary assignment before return statement 
     "PT018",  # Assertion should be broken down into multiple parts

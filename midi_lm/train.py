@@ -13,7 +13,7 @@ from midi_lm import logger
 from midi_lm.callbacks import GenerateSequenceCallback
 from midi_lm.config import TrainingConfig
 from midi_lm.config.transforms import create_transforms
-from midi_lm.modal_config import remote_image, stub, volume
+from midi_lm.modal_config import stub, train_a10g, train_a100, train_cpu
 from midi_lm.tokenizers import BaseTokenizer
 
 
@@ -58,32 +58,10 @@ def run_training(config: TrainingConfig):
     if config.compute.local:
         # for some reason, modal doesn't seem to show the rich progress bar
         callbacks.append(RichProgressBar())
+
     trainer: pl.Trainer = hydra.utils.instantiate(config.trainer, logger=logger, callbacks=callbacks)
     logger.log_hyperparams(OmegaConf.to_container(config))  # type: ignore
     trainer.fit(model=model, datamodule=dataset)
-
-
-# wrapper for remote execution
-def train_remote(config: TrainingConfig, singleton_state: dict, args: list[str]):
-    import os
-
-    import torch
-    from hydra.core.utils import setup_globals
-
-    # perform some initial hydra setup
-    setup_globals()
-    Singleton.set_state(singleton_state)
-    # set environment variable to change command shown in wandb run
-    os.environ["WANDB_PROGRAM"] = " ".join(args)
-    # use the code below once wandb fixes a bug
-    # https://github.com/wandb/wandb/issues/4791
-    # os.environ["WANDB_PROGRAM"] = args[0]
-    # os.environ["WANDB_ARGS"] = json.dumps(args[1:])
-
-    torch.set_float32_matmul_precision("medium")
-
-    # execute the model training
-    run_training(config)
 
 
 # CLI entrypoint
@@ -94,18 +72,16 @@ def train(config: TrainingConfig) -> None:
         run_training(config)
     else:
         logger.info("Running remote training")
-        fn = stub.function(
-            image=remote_image,
-            volumes={"/root/data": volume},
-            timeout=config.compute.timeout,
-            cpu=config.compute.cpu,
-            memory=config.compute.memory,
-            gpu=config.compute.gpu,
-        )(train_remote)
+        options = {
+            "cpu": train_cpu,
+            "a10g": train_a10g,
+            "a100": train_a100,
+        }
+        remote_fn = options[config.compute.hardware]
         with stub.run(detach=True, show_progress=False):
             # copy hydra config state and pass to remote execution
             singleton_state = Singleton.get_state()
-            fn.remote(config, singleton_state, args=sys.argv)
+            remote_fn.remote(config, singleton_state, args=sys.argv)
 
 
 if __name__ == "__main__":

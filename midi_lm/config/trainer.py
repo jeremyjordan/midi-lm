@@ -42,4 +42,4 @@ class GpuTrainerConfig:
     accelerator: str = "gpu"
     precision: str = "16-mixed"
     gradient_clip_val: float = 1.0
-    accumulate_grad_batches: int = 4
+    val_check_interval: int | float = 150
