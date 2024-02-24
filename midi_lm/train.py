@@ -60,12 +60,7 @@ def run_training(config: TrainingConfig):
         # for some reason, modal doesn't seem to show the rich progress bar
         callbacks.append(RichProgressBar())
 
-    profiler = PyTorchProfiler(
-        dirpath=Path("/root/debug", "profiler"), filename="profiler_results", row_limit=1000
-    )
-    trainer: pl.Trainer = hydra.utils.instantiate(
-        config.trainer, logger=logger, callbacks=callbacks, profiler=profiler
-    )
+    trainer: pl.Trainer = hydra.utils.instantiate(config.trainer, logger=logger, callbacks=callbacks)
     logger.log_hyperparams(OmegaConf.to_container(config))  # type: ignore
     trainer.fit(model=model, datamodule=dataset)
 
