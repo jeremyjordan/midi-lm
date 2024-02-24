@@ -7,14 +7,13 @@ from hydra.core.hydra_config import HydraConfig
 from hydra.core.singleton import Singleton
 from lightning.pytorch.callbacks import LearningRateMonitor, ModelCheckpoint, RichProgressBar
 from lightning.pytorch.loggers.wandb import WandbLogger
-from lightning.pytorch.profilers import PyTorchProfiler
 from omegaconf import OmegaConf
 
 from midi_lm import logger
 from midi_lm.callbacks import GenerateSequenceCallback
 from midi_lm.config import TrainingConfig
 from midi_lm.config.transforms import create_transforms
-from midi_lm.modal_config import remote_image, stub, train_a10g, train_a100, train_cpu
+from midi_lm.modal_config import stub, train_a10g, train_a100, train_cpu
 from midi_lm.tokenizers import BaseTokenizer
 
 
