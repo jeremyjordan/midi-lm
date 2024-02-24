@@ -66,7 +66,7 @@ def train_remote(config: TrainingConfig, singleton_state: dict, args: list[str])
 
 
 @stub.function(
-    cpu=4,
+    cpu=8,
     memory=3814,  # 4gb
     timeout=60 * 60 * 12,
     volumes={"/root/data": volume, "/root/debug": debug_vol},
@@ -76,7 +76,7 @@ def train_cpu(config: TrainingConfig, singleton_state: dict, args: list[str]):
 
 
 @stub.function(
-    cpu=4,
+    cpu=16,
     memory=3814,  # 4gb
     gpu="a10g",
     timeout=60 * 60 * 12,
@@ -86,7 +86,7 @@ def train_a10g(config: TrainingConfig, singleton_state: dict, args: list[str]):
 
 
 @stub.function(
-    cpu=8,
+    cpu=16,
     memory=7628,  # 8gb
     gpu="a100",
     timeout=60 * 60 * 12,
@@ -153,5 +153,4 @@ def download_symphony_net():
 
     SymphonyNetDataset.download("/root/data/symphony_net")
     SymphonyNetDataset.make_splits("/root/data/symphony_net")
-    volume.commit()
     volume.commit()
