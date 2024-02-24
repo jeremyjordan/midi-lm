@@ -5,7 +5,7 @@ pip install py-spy
 
 sudo py-spy record -o outputs/profile.json --subprocesses --format speedscope -- python \
     midi_lm/datasets/scripts/profile_dataloader.py \
-    dataset=nes tokenizer=mmt transforms=crop-transpose dataset.num_workers=0
+    dataset=nes tokenizer=mmt transforms=crop-transpose dataset.num_workers=8
 """
 
 import time

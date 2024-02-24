@@ -16,6 +16,7 @@ def crop_music(music: muspy.Music, start_beat: int, end_beat: int) -> muspy.Musi
     assert start_beat < end_beat, "start_beat must be less than end_beat"
 
     # Make a deepcopy of the music so we don't modify the original
+    # TODO this is a bit inefficient and not necessary as long as we're always loading from file
     music = music.deepcopy()
     start_time = start_beat * music.resolution
     end_time = end_beat * music.resolution
