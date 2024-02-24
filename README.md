@@ -150,7 +150,7 @@ dataset: bach, maestro, nes, scales, symphony-net
 logger: tensorboard, wandb, wandb-test
 lr_scheduler: cosine, plateau
 model: mmt, multihead-transformer, structured
-network: mmt, mmt-medium, mmt-small, structured, structured-medium, structured-small, tpd, tpd-medium, tpd-small
+network: mmt-1m, mmt-20m, mmt-7m, structured-1m, structured-20m, structured-7m, tpd-19m, tpd-1m, tpd-6m
 optimizer: adam, adamw, sgd
 tokenizer: mmt, structured, tpd
 trainer: cpu, gpu, mps, smoke-test

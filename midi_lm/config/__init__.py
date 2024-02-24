@@ -31,7 +31,7 @@ class TrainingConfig:
             {"logger": "tensorboard"},
             {"lr_scheduler": "cosine"},
             {"model": "mmt"},
-            {"network": "mmt"},
+            {"network": "mmt-20m"},
             {"optimizer": "adamw"},
             {"tokenizer": "mmt"},
             {"trainer": "smoke-test"},
@@ -79,15 +79,15 @@ config.store(group="model", name="mmt", node=models.MultitrackMusicTransformerMo
 config.store(group="model", name="multihead-transformer", node=models.MultiheadTransformerModelConfig)
 config.store(group="model", name="structured", node=models.StructuredTransformerModelConfig)
 
-config.store(group="network", name="mmt-small", node=networks.SmallMMTConfig)
-config.store(group="network", name="mmt-medium", node=networks.MediumMMTConfig)
-config.store(group="network", name="mmt", node=networks.MMTConfig)
-config.store(group="network", name="tpd-small", node=networks.SmallTPDConfig)
-config.store(group="network", name="tpd-medium", node=networks.MediumTPDConfig)
-config.store(group="network", name="tpd", node=networks.TPDConfig)
-config.store(group="network", name="structured-small", node=networks.SmallStructuredConfig)
-config.store(group="network", name="structured-medium", node=networks.MediumStructuredConfig)
-config.store(group="network", name="structured", node=networks.StructuredConfig)
+config.store(group="network", name="mmt-1m", node=networks.MultitrackMusicTransformerNetwork1M)
+config.store(group="network", name="mmt-7m", node=networks.MultitrackMusicTransformerNetwork7M)
+config.store(group="network", name="mmt-20m", node=networks.MultitrackMusicTransformerNetwork20M)
+config.store(group="network", name="tpd-1m", node=networks.TimeshiftPitchDurationNetwork1M)
+config.store(group="network", name="tpd-6m", node=networks.TimeshiftPitchDurationNetwork6M)
+config.store(group="network", name="tpd-19m", node=networks.TimeshiftPitchDurationNetwork19M)
+config.store(group="network", name="structured-1m", node=networks.StructuredSequenceNetwork1M)
+config.store(group="network", name="structured-7m", node=networks.StructuredSequenceNetwork7M)
+config.store(group="network", name="structured-20m", node=networks.StructuredSequenceNetwork20M)
 
 
 config.store(group="optimizer", name="adam", node=optimizers.AdamOptimizerConfig)
