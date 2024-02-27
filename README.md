@@ -100,30 +100,30 @@ dataclass objects. These dataclass objects are given short-names in the "config 
 Example local runs:
 ```
 train compute=local logger=wandb-test trainer=mps \
-    tokenizer=mmt model=mmt network=mmt-small \
+    tokenizer=mmt model=mmt network=mmt-1m \
     dataset=scales transforms=crop \
     trainer.val_check_interval=1.0 trainer.max_epochs=20
 ```
 ```
 train compute=local logger=wandb-test trainer=mps \
-    tokenizer=mmt model=mmt network=mmt-small \
+    tokenizer=mmt model=mmt network=mmt-1m \
     dataset=bach transforms=crop_transpose \
     trainer.val_check_interval=1.0
 ```
 ```
 train compute=local logger=wandb-test trainer=mps \
-    tokenizer=mmt model=mmt network=mmt-small \
+    tokenizer=mmt model=mmt network=mmt-1m \
     dataset=nes transforms=crop-transpose
 ```
 
 Example remote run:
 ```
 train compute=a10g compute.timeout=21600 logger=wandb trainer=gpu \
-    tokenizer=mmt model=mmt network=mmt \
+    tokenizer=mmt model=mmt network=mmt-7m \
     dataset=maestro transforms=crop-transpose
 
 train compute=a10g compute.timeout=3600 logger=wandb-test trainer=gpu \
-    tokenizer=mmt model=mmt network=mmt \
+    tokenizer=mmt model=mmt network=mmt-7m \
     dataset=nes transforms=crop-transpose \
     +trainer.profiler="simple" +trainer.max_steps=10
 ```
@@ -155,4 +155,16 @@ optimizer: adam, adamw, sgd
 tokenizer: mmt, structured, tpd
 trainer: cpu, gpu, mps, smoke-test
 transforms: crop, crop-transpose
+```
+
+## Resuming a training run
+
+You can also continue training from a saved checkpoint using the `resume` command. This command assumes that you have a
+checkpoint saved as a Weights and Biases artifact. It will load the configuration from the run associated with the
+provided artifact, and then can optionally provide a set of overrides passed from the command line. Anything after the
+`--` is treated as a Hydra override command. You can use this to update certain configurations from the original run
+which you would like to change, such as training for more epochs.
+
+```
+resume jeremytjordan/midi-language-modeling-test/model-bmpqj6ev:v2 -- trainer.max_epochs=20
 ```

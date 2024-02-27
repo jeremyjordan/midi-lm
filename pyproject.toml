@@ -49,6 +49,7 @@ packages = ["midi_lm"]
 
 [project.scripts]
 train = "midi_lm.train:train"
+resume = "midi_lm.train:resume_cli"
 
 [tool.ruff]
 line-length = 108
