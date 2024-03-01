@@ -11,7 +11,7 @@ from hydra.core.hydra_config import HydraConfig
 from hydra.core.singleton import Singleton
 from lightning.pytorch.callbacks import LearningRateMonitor, ModelCheckpoint, RichProgressBar
 from lightning.pytorch.loggers.wandb import WandbLogger
-from omegaconf import OmegaConf
+from omegaconf import OmegaConf, open_dict
 
 from midi_lm import logger
 from midi_lm.callbacks import GenerateSequenceCallback
@@ -118,7 +118,7 @@ def resume(
         original_run_config = OmegaConf.create(run.config)
         logger.info(f"Original run config: {original_run_config}\n")
 
-        # initialize hydra config module and config store
+        # initialize hydra config module and config store singleton
         initialize_config_module(config_module="midi_lm.config", version_base=None)
         cs = ConfigStore.instance()
         # insert the original run config into the config store
@@ -133,6 +133,11 @@ def resume(
         # update the global state to mirror the logic in the hydra main function
         # https://github.com/facebookresearch/hydra/issues/2017#issuecomment-1254220345
         HydraConfig.instance().set_config(resume_config)
+        # after saving the hydra config to the global state, we can remove it from our training config
+        # in order to modify the DictConfig, we need to use the open_dict context manager
+        # https://omegaconf.readthedocs.io/en/latest/usage.html#struct-flag
+        with open_dict(resume_config):
+            resume_config.pop("hydra")
 
         resume_config.resume_from_checkpoint = artifact_name
         logger.info(f"Resuming training with config: {resume_config}\n")
