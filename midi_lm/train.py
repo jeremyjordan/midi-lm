@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from pprint import pformat
 
 import hydra
 import lightning.pytorch as pl
@@ -29,15 +30,6 @@ def run_training(config: TrainingConfig):
     checkpoint_dir = Path(run_dir, "checkpoints")
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
-    # if we're resuming a training run, download the checkpoint artifact
-    if config.resume_from_checkpoint is not None:
-        api = wandb.Api()
-        model_checkpoint = api.artifact(config.resume_from_checkpoint)
-        model_checkpoint.download(root=checkpoint_dir.as_posix())
-        ckpt_path = Path(checkpoint_dir, "model.ckpt").as_posix()
-    else:
-        ckpt_path = None
-
     tokenizer: BaseTokenizer = hydra.utils.instantiate(config.tokenizer)
     collate_fn = hydra.utils.get_method(config.collator._target_)
     transforms = create_transforms(config.transforms)
@@ -56,10 +48,6 @@ def run_training(config: TrainingConfig):
         _recursive_=False,
     )
 
-    logger = hydra.utils.instantiate(config.logger)
-    if isinstance(logger, WandbLogger):
-        logger.watch(model, log="all", log_freq=100)
-
     # TODO: make these callbacks configurable
     callbacks = [
         LearningRateMonitor(logging_interval="step"),
@@ -73,6 +61,24 @@ def run_training(config: TrainingConfig):
     if config.compute.local:
         # for some reason, modal doesn't seem to show the rich progress bar
         callbacks.append(RichProgressBar())
+
+    logger = hydra.utils.instantiate(config.logger)
+    if isinstance(logger, WandbLogger):
+        # hack to pass through wandb settings since a pure dict doesn't seem to work and hydra instantiate
+        # won't allow passing through a dataclass (which is what wandb.Settings resolves to)
+        logger._wandb_init.update({"settings": wandb.Settings(disable_job_creation=True)})
+        logger.watch(model, log="gradients", log_freq=100, log_graph=False)
+
+    # if we're resuming a training run, download the checkpoint artifact
+    if config.resume_from_checkpoint is not None:
+        api = wandb.Api()
+        model_checkpoint = api.artifact(config.resume_from_checkpoint)
+        ckpt_path = str(model_checkpoint.file(root=checkpoint_dir.as_posix()))
+    else:
+        ckpt_path = None
+
+    if config.resume_from_checkpoint and isinstance(logger, WandbLogger):
+        logger.experiment.use_artifact(config.resume_from_checkpoint)
 
     trainer: pl.Trainer = hydra.utils.instantiate(config.trainer, logger=logger, callbacks=callbacks)
     logger.log_hyperparams(OmegaConf.to_container(config))  # type: ignore
@@ -99,7 +105,6 @@ def train(config: TrainingConfig) -> None:
             remote_fn.remote(config, singleton_state, args=sys.argv)
 
 
-@hydra.main(version_base=None, config_name="config")
 @resume_cli.command()
 def resume(
     artifact_name: str = typer.Argument(
@@ -115,8 +120,8 @@ def resume(
     model_checkpoint = api.artifact(artifact_name)
     run = model_checkpoint.logged_by()
     if run:
+        logger.info(f"Resuming training from run: {run.id}")
         original_run_config = OmegaConf.create(run.config)
-        logger.info(f"Original run config: {original_run_config}\n")
 
         # initialize hydra config module and config store singleton
         initialize_config_module(config_module="midi_lm.config", version_base=None)
@@ -140,7 +145,7 @@ def resume(
             resume_config.pop("hydra")
 
         resume_config.resume_from_checkpoint = artifact_name
-        logger.info(f"Resuming training with config: {resume_config}\n")
+        logger.debug(f"Resuming training with config:\n{pformat(OmegaConf.to_container(resume_config))}\n")
         train(resume_config)
     else:
         raise ValueError(f"Could not find run for artifact {artifact_name}")
