@@ -159,12 +159,13 @@ transforms: crop, crop-transpose
 
 ## Resuming a training run
 
-You can also continue training from a saved checkpoint using the `resume` command. This command assumes that you have a
-checkpoint saved as a Weights and Biases artifact. It will load the configuration from the run associated with the
-provided artifact, and then can optionally provide a set of overrides passed from the command line. Anything after the
-`--` is treated as a Hydra override command. You can use this to update certain configurations from the original run
-which you would like to change, such as training for more epochs.
+You can also continue training from a checkpoint saved in Weights and Biases using the `resume` command.
+This command assumes that you have a checkpoint saved as a Weights and Biases artifact. It will load the
+configuration from the run associated with the provided artifact, and then can optionally provide a set of
+overrides passed from the command line. Anything after the `--` is treated as a Hydra override command. You
+can use this to update certain configurations from the original run which you would like to change, such as
+training for more epochs.
 
 ```
-resume jeremytjordan/midi-language-modeling-test/model-bmpqj6ev:v2 -- trainer.max_epochs=20
+resume user/project/model:tag -- trainer.max_epochs=20
 ```
