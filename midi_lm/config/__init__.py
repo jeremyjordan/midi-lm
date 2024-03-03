@@ -70,6 +70,7 @@ config.store(group="dataset", name="bach", node=datasets.BachChoralesDatasetConf
 config.store(group="dataset", name="nes", node=datasets.NESDatasetConfig)
 config.store(group="dataset", name="maestro", node=datasets.MaestroDatasetConfig)
 config.store(group="dataset", name="symphony-net", node=datasets.SymphonyNetConfig)
+config.store(group="dataset", name="giantmidi", node=datasets.GiantMidiDatasetConfig)
 
 config.store(group="logger", name="tensorboard", node=loggers.TensorBoardLoggerConfig)
 config.store(group="logger", name="wandb", node=loggers.WeightsAndBiasesLoggerConfig)
