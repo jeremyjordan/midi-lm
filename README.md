@@ -170,9 +170,9 @@ would like to change, such as training for more epochs.
 resume user/project/model:tag -- trainer.max_epochs=20 dataset.batch_size=32
 ```
 
-By default, much of the model and training state will be loaded from the checkpoint. This includes states
+By default, all of the model and training states **will** be loaded from the checkpoint. This includes states
 such as the optimizer and learning rate schedulers, as well as the current epoch and global step for the
-trainer. If you wish to resume training with a new learning rate, for example, you must include the `--clean`
+trainer. If you wish to resume training with a _new_ learning rate, for example, you must include the `--clean`
 flag. This will load the model weights from the specified checkpoint file, but all other states will be reset.
 
 ```
