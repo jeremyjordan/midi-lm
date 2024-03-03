@@ -104,6 +104,7 @@ def download_scales():
     from midi_lm.datasets.scales import ScalesDataset
 
     ScalesDataset.download("/root/data/scales")
+    volume.commit()
     ScalesDataset.make_splits("/root/data/scales")
     volume.commit()
 
@@ -116,6 +117,7 @@ def download_bach():
     from midi_lm.datasets.bach_chorales import BachChoralesDataset
 
     BachChoralesDataset.download("/root/data/bach_chorales")
+    volume.commit()
     BachChoralesDataset.make_splits("/root/data/bach_chorales")
     volume.commit()
 
@@ -128,6 +130,7 @@ def download_nes():
     from midi_lm.datasets.nes import NESDataset
 
     NESDataset.download("/root/data/nes")
+    volume.commit()
     NESDataset.make_splits("/root/data/nes")
     volume.commit()
 
@@ -140,6 +143,7 @@ def download_maestro():
     from midi_lm.datasets.maestro import MaestroDataset
 
     MaestroDataset.download("/root/data/maestro")
+    volume.commit()
     MaestroDataset.make_splits("/root/data/maestro")
     volume.commit()
 
@@ -152,5 +156,19 @@ def download_symphony_net():
     from midi_lm.datasets.symphony_net import SymphonyNetDataset
 
     SymphonyNetDataset.download("/root/data/symphony_net")
+    volume.commit()
     SymphonyNetDataset.make_splits("/root/data/symphony_net")
+    volume.commit()
+
+
+@stub.function(volumes={"/root/data": volume}, cpu=16, timeout=60 * 60)
+def download_giantmidi():
+    """
+    modal run midi_lm/modal_config.py::stub.download_giantmidi
+    """
+    from midi_lm.datasets.giantmidi_piano import GiantMidiPianoDataset
+
+    GiantMidiPianoDataset.download("/root/data/giantmidi_piano")
+    volume.commit()
+    GiantMidiPianoDataset.make_splits("/root/data/giantmidi_piano")
     volume.commit()

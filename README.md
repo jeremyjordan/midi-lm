@@ -46,14 +46,16 @@ I've added multiple different MIDI datasets of varying complexity (from basic sc
 with networks of varying capacity so I can do some exploration of ideas at a small scale before ramping up the compute
 cost to train larger models on bigger datasets.
 
-| Dataset      | Description                                                         | Train (file count)  | Validation (file count)  |
-|--------------|---------------------------------------------------------------------|---------------------|--------------------------|
-| Eighth Notes | One measure of eighth notes for 12 different pitches                | 6                   | 6                        |
-| Scales       | 12 major and 12 minor scales                                        | 20                  | 4                        |
-| JSB Chorales | A collection of 382 four-part chorales by Johann Sebastian Bach     | 229                 | 76                       |
-| NES          | Songs from the soundtracks of 397 NES games                         | 4441*               | 395*                     |
-| MAESTRO      | MIDI recordings from ten years of International Piano-e-Competition | 962                 | 137                      |
-| SymphonyNet  | A collection of classical and contemporary symphonic compositions   | 37088               | 9272                     |
+| Dataset         | Description                                                         | Train (file count) | Validation (file count) |
+|-----------------|---------------------------------------------------------------------|--------------------|-------------------------|
+| Eighth Notes    | One measure of eighth notes for 12 different pitches                | 6                  | 6                       |
+| Scales          | 12 major and 12 minor scales                                        | 20                 | 4                       |
+| JSB Chorales    | A collection of 382 four-part chorales by Johann Sebastian Bach     | 229                | 76                      |
+| NES             | Songs from the soundtracks of 397 NES games                         | 4441*              | 395*                    |
+| MAESTRO         | MIDI recordings from ten years of International Piano-e-Competition | 962                | 137                     |
+| SymphonyNet     | A collection of classical and contemporary symphonic compositions   | 37088              | 9272                    |
+| GiantMIDI Piano | A classical piano MIDI dataset of 2,786 different composers         | 8682*              | 2170*                   |
+
 
 *Count after filtering out files from the original dataset which don't meet data quality thresholds for a minimum number
 of beats, tracks, etc.
@@ -146,7 +148,7 @@ Compose your configuration from those groups (group=option)
 
 collator: multi-seq-dict
 compute: a100, a10g, cpu, local
-dataset: bach, maestro, nes, scales, symphony-net
+dataset: bach, giantmidi, maestro, nes, scales, symphony-net
 logger: tensorboard, wandb, wandb-test
 lr_scheduler: cosine, plateau
 model: mmt, multihead-transformer, structured
