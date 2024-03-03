@@ -39,3 +39,11 @@ class SymphonyNetConfig:
     dataset_dir: str = "data/symphony_net/"
     batch_size: int = 64
     num_workers: int = 16
+
+
+@dataclass
+class GiantMidiDatasetConfig:
+    _target_: str = "midi_lm.datasets.giantmidi_piano.GiantMidiPianoDataModule"
+    dataset_dir: str = "data/giantmidi_piano/"
+    batch_size: int = 64
+    num_workers: int = 16
