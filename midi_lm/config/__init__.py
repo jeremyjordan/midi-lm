@@ -49,6 +49,9 @@ class TrainingConfig:
     tokenizer: Any = MISSING
     trainer: Any = MISSING
     transforms: Any = MISSING
+    # optional configs for training runs which resume from a checkpoint
+    resume_from_checkpoint: str | None = None
+    resume_from_clean_state: bool = False
 
 
 config = ConfigStore.instance()

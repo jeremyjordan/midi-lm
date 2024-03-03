@@ -9,7 +9,6 @@ class CpuDebugTrainerConfig:
     log_every_n_steps: int = 1
     overfit_batches: int = 1
     gradient_clip_val: float = 1.0
-    val_check_interval: int | float = 10
 
 
 @dataclass
@@ -20,7 +19,6 @@ class MpsTrainerConfig:
     accelerator: str = "mps"
     devices: int = 1
     gradient_clip_val: float = 1.0
-    val_check_interval: int | float = 150
 
 
 @dataclass
@@ -30,7 +28,6 @@ class CpuTrainerConfig:
     accelerator: str = "cpu"
     log_every_n_steps: int = 1
     gradient_clip_val: float = 1.0
-    val_check_interval: int | float = 150
 
 
 @dataclass
@@ -42,4 +39,3 @@ class GpuTrainerConfig:
     accelerator: str = "gpu"
     precision: str = "16-mixed"
     gradient_clip_val: float = 1.0
-    val_check_interval: int | float = 150

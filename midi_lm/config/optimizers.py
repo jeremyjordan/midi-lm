@@ -12,7 +12,7 @@ class AdamOptimizerConfig:
 class AdamWOptimizerConfig:
     _target_: str = "torch.optim.AdamW"
     lr: float = 0.002
-    weight_decay: float = 1e-2
+    weight_decay: float = 1e-3
 
 
 @dataclass
