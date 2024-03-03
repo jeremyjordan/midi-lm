@@ -23,7 +23,7 @@ class ReduceLROnPlateauConfig:
 @dataclass
 class CosineAnnealingWarmRestarts:
     _target_: str = "torch.optim.lr_scheduler.CosineAnnealingWarmRestarts"
-    T_0: int = 200
+    T_0: int = 2000
     T_mult: int = 2
     eta_min: float = 1e-6
 

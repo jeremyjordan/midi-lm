@@ -74,6 +74,12 @@ def run_training(config: TrainingConfig):
         api = wandb.Api()
         model_checkpoint = api.artifact(config.resume_from_checkpoint)
         ckpt_path = str(model_checkpoint.file(root=checkpoint_dir.as_posix()))
+        model = model.__class__.load_from_checkpoint(
+            checkpoint_path=ckpt_path,
+            network_config=config.network,
+            optimizer_config=config.optimizer,
+            lr_scheduler_config=config.lr_scheduler,
+        )
     else:
         ckpt_path = None
 
@@ -82,7 +88,8 @@ def run_training(config: TrainingConfig):
 
     trainer: pl.Trainer = hydra.utils.instantiate(config.trainer, logger=logger, callbacks=callbacks)
     logger.log_hyperparams(OmegaConf.to_container(config))  # type: ignore
-    trainer.fit(model=model, datamodule=dataset, ckpt_path=ckpt_path)
+    train_ckpt_path = None if config.resume_from_clean_state else ckpt_path
+    trainer.fit(model=model, datamodule=dataset, ckpt_path=train_ckpt_path)
 
 
 # CLI entrypoint
@@ -108,7 +115,10 @@ def train(config: TrainingConfig) -> None:
 @resume_cli.command()
 def resume(
     artifact_name: str = typer.Argument(
-        help="Name of the wandb artifact to resume training from (e.g. 'user/project/model:v0')"
+        ..., help="Name of the wandb artifact to resume training from (e.g. 'user/project/model:v0')"
+    ),
+    clean: bool = typer.Option(
+        False, help="Ignore the current model and trainer state and reinitialize from the config"
     ),
     hydra_config_overrides: list[str] = typer.Argument(  # noqa: B008
         None,
@@ -138,14 +148,30 @@ def resume(
         # update the global state to mirror the logic in the hydra main function
         # https://github.com/facebookresearch/hydra/issues/2017#issuecomment-1254220345
         HydraConfig.instance().set_config(resume_config)
-        # after saving the hydra config to the global state, we can remove it from our training config
+
         # in order to modify the DictConfig, we need to use the open_dict context manager
         # https://omegaconf.readthedocs.io/en/latest/usage.html#struct-flag
         with open_dict(resume_config):
+            # after saving the hydra config to the global state, we can remove it from our training config
             resume_config.pop("hydra")
+            # we'll also make sure to document which checkpoint we're resuming from
+            resume_config.resume_from_checkpoint = artifact_name
+            resume_config.resume_from_clean_state = clean
 
-        resume_config.resume_from_checkpoint = artifact_name
         logger.debug(f"Resuming training with config:\n{pformat(OmegaConf.to_container(resume_config))}\n")
+        if clean:
+            logger.info(
+                "Note: only the model parameters will be loaded from the checkpoint artifact. The "
+                "optimizer and learning rate scheduler will be reinitialized from the config and the "
+                "trainer state (epoch, step, etc.) will be reset."
+            )
+        else:
+            logger.info(
+                "Note: the model state (parameters, optimizer, learning rate schedulers) and training "
+                "state (epoch, step, etc.) will be resumed from the specified checkpoint. You will not "
+                "be able to override configuration options such as the learning rate. If you want to "
+                "change these options, you must specify the `--clean` option in the resume command."
+            )
         train(resume_config)
     else:
         raise ValueError(f"Could not find run for artifact {artifact_name}")
