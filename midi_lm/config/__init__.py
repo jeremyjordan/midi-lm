@@ -64,6 +64,7 @@ config.store(group="compute", name="local", node=compute.LocalConfig)
 config.store(group="compute", name="cpu", node=compute.ModalCpuConfig)
 config.store(group="compute", name="a10g", node=compute.ModalGpuA10gConfig)
 config.store(group="compute", name="a100", node=compute.ModalGpuA100Config)
+config.store(group="compute", name="h100", node=compute.ModalGpuH100Config)
 
 config.store(group="dataset", name="scales", node=datasets.ScalesDatasetConfig)
 config.store(group="dataset", name="bach", node=datasets.BachChoralesDatasetConfig)

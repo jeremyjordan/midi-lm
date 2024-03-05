@@ -95,6 +95,16 @@ def train_a100(config: TrainingConfig, singleton_state: dict, args: list[str]):
     train_remote(config, singleton_state, args)
 
 
+@stub.function(
+    cpu=16,
+    memory=15258,  # 16gb
+    gpu="h100",
+    timeout=60 * 60 * 4,
+)
+def train_h100(config: TrainingConfig, singleton_state: dict, args: list[str]):
+    train_remote(config, singleton_state, args)
+
+
 # remote dataset download functions
 @stub.function(volumes={"/root/data": volume})
 def download_scales():
