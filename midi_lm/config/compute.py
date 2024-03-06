@@ -22,3 +22,9 @@ class ModalGpuA10gConfig:
 class ModalGpuA100Config:
     local: bool = False
     hardware: str = "a100"
+
+
+@dataclass
+class ModalGpuH100Config:
+    local: bool = False
+    hardware: str = "h100"
