@@ -104,13 +104,12 @@ Example local runs:
 train compute=local logger=wandb-test trainer=mps \
     tokenizer=mmt model=mmt network=mmt-1m \
     dataset=scales transforms=crop \
-    trainer.val_check_interval=1.0 trainer.max_epochs=20
+    trainer.max_epochs=20
 ```
 ```
 train compute=local logger=wandb-test trainer=mps \
     tokenizer=mmt model=mmt network=mmt-1m \
-    dataset=bach transforms=crop_transpose \
-    trainer.val_check_interval=1.0
+    dataset=bach transforms=crop_transpose
 ```
 ```
 train compute=local logger=wandb-test trainer=mps \
@@ -120,11 +119,12 @@ train compute=local logger=wandb-test trainer=mps \
 
 Example remote run:
 ```
-train compute=a10g compute.timeout=21600 logger=wandb trainer=gpu \
+train compute=a10g logger=wandb trainer=gpu \
     tokenizer=mmt model=mmt network=mmt-7m \
     dataset=maestro transforms=crop-transpose
-
-train compute=a10g compute.timeout=3600 logger=wandb-test trainer=gpu \
+```
+```
+train compute=a10g logger=wandb-test trainer=gpu \
     tokenizer=mmt model=mmt network=mmt-7m \
     dataset=nes transforms=crop-transpose \
     +trainer.profiler="simple" +trainer.max_steps=10
@@ -147,7 +147,7 @@ below for convenience.
 Compose your configuration from those groups (group=option)
 
 collator: multi-seq-dict
-compute: a100, a10g, cpu, local
+compute: a100, a10g, cpu, h100, local
 dataset: bach, giantmidi, maestro, nes, scales, symphony-net
 logger: tensorboard, wandb, wandb-test
 lr_scheduler: cosine, plateau
