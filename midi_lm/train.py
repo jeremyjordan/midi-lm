@@ -18,7 +18,7 @@ from midi_lm import logger
 from midi_lm.callbacks import GenerateSequenceCallback
 from midi_lm.config import TrainingConfig
 from midi_lm.config.transforms import create_transforms
-from midi_lm.modal_config import stub, train_a10g, train_a100, train_cpu
+from midi_lm.modal_config import stub, train_a10g, train_a100, train_cpu, train_h100
 from midi_lm.tokenizers import BaseTokenizer
 
 resume_cli = typer.Typer()
@@ -104,6 +104,7 @@ def train(config: TrainingConfig) -> None:
             "cpu": train_cpu,
             "a10g": train_a10g,
             "a100": train_a100,
+            "h100": train_h100,
         }
         remote_fn = options[config.compute.hardware]
         with stub.run(detach=True, show_progress=False):
