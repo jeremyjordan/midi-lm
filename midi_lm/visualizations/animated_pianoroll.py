@@ -106,8 +106,12 @@ def midi_player_iframe(
     </style>
     <script src="{MAGENTA_JS}"></script>
     <p>{title}</p>
-    <midi-player src="{data_url}" sound-font visualizer="#midi-visualizer"></midi-player>
-    <midi-visualizer type="{vis_type}" id="midi-visualizer" style="background: #fff;"></midi-visualizer>
+    <section>
+      <midi-player src="{data_url}" sound-font="" visualizer="#midi-visualizer">
+      </midi-player>
+      <midi-visualizer src="{data_url}" type="{vis_type}" id="midi-visualizer">
+      </midi-visualizer>
+    </section>
     """
 
     output = f"""
